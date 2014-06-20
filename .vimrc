@@ -1,81 +1,79 @@
 set nocompatible              " be iMproved
 filetype off                  " required!
+colorscheme desert 
+filetype plugin on
+filetype plugin indent on     " required!
+set completeopt=longest,menu
 colorscheme darkblue
+set modifiable
 set mouse=a
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set ignorecase
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'filetype.vim'
 
-Bundle 'filetype.vim'
-Bundle 'CCTree'
+""CCTree....................................................................................
+"Plugin 'CCTree'
 "cctree
 "let CCTreeEnhancedSymbolProcessing = 1
-let g:CCTreeKeyTraceForwardTree = '<C-\>>'
-let g:CCTreeKeyTraceReverseTree = '<C-\><'
-let g:CCTreeKeyHilightTree = '<C-l>' 
-let g:CCTreeKeySaveWindow = '<C-\>y' 
-let g:CCTreeKeyToggleWindow = '<C-\>w'
-let g:CCTreeKeyCompressTree = 'zs'   
-let g:CCTreeKeyDepthPlus = '<C-\>=' 
-let g:CCTreeKeyDepthMinus = '<C-\>-'
+"let g:CCTreeKeyTraceForwardTree = '<C-\>>'
+"let g:CCTreeKeyTraceReverseTree = '<C-\><'
+"let g:CCTreeKeyHilightTree = '<C-l>' 
+"let g:CCTreeKeySaveWindow = '<C-\>y' 
+"let g:CCTreeKeyToggleWindow = '<C-\>w'
+"let g:CCTreeKeyCompressTree = 'zs'   
+"let g:CCTreeKeyDepthPlus = '<C-\>=' 
+"let g:CCTreeKeyDepthMinus = '<C-\>-'
+""CCTree....................................................................................
 
-Bundle 'Tagbar'
-let g:TagbarToggle = 'tb'
+
+"Tagbar........................................................................................
+"Plugin 'Tagbar'
+"let g:TagbarToggle = 'tb'
 "nmap <F9> :TagbarToggle<CR>
-"
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-" My bundles here:
+"Tagbar........................................................................................
+
+
+
+" My Plugins here:
 "
 " original repos on GitHub
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'winmanager'
-Bundle 'OmniCppComplete'
-Bundle 'ctags.vim'
-"Bundle 'TagsMenu.zip'
-Bundle 'AutoComplPop'
-"Bundle 'Powerline'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-"Bundle 'gtags.vim'
-"Bundle 'GtagsClient'
-"Bundle 'gtags-multiwindow-browsing'
-colorscheme darkblue
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'tpope/vim-rails.git'
+"" vim-scripts repos
+"Plugin 'L9'
+Plugin 'winmanager'
+Plugin 'ctags.vim'
+"Plugin 'TagsMenu.zip'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+"Plugin 'gtags.vim'
+"Plugin 'GtagsClient'
+"Plugin 'gtags-multiwindow-browsing'
 " non-GitHub repos
-" Bundle 'git://git.wincent.com/command-t.git'
+" Plugin 'git://git.wincent.com/command-t.git'
 " Git repos on your local machine (i.e. when working on your own plugin)
-" Bundle 'file:///Users/gmarik/path/to/plugin'
+" Plugin 'file:///Users/gmarik/path/to/plugin'
 " ...
 
 filetype plugin indent on     " required!
 set completeopt=longest,menu
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install (update) bundles
-" :BundleSearch(!) foo - search (or refresh cache first) for foo
-" :BundleClean(!)      - confirm (or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle commands are not allowed.
-"
 
-Bundle 'cocoa.vim'
-Bundle 'nagios-syntax'
-Bundle 'clang-complete'
+Plugin 'cocoa.vim'
+Plugin 'nagios-syntax'
 
 
 "Taglist
 " F4:  Switch on/off TagList
 "nnoremap <unique> <silent> <F4> :TlistToggle<CR>
 "nnoremap <unique> <silent> <F1> :NERDTreeToggle <CR>
-Bundle 'taglist.vim'
+Plugin 'taglist.vim'
 "let Tlist_Ctags_Cmd = $VIM.'/vimfiles/ctags.exe' " location of ctags tool 
 let Tlist_Show_One_File = 1 " Displaying tags for only one file~
 let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself 
@@ -97,9 +95,9 @@ autocmd BufRead,BufNewFile *.mm :set ft=objc
 let tlist_objc_settings    = 'ObjC;i:interface;P:property;I:implementations;M:instanceMethod;C:methods;Z:protocols'
 
 "cscope
-Bundle 'cscope.vim'
-Bundle 'cscope-menu'
-Bundle 'autoload_cscope.vim'
+Plugin 'cscope.vim'
+Plugin 'cscope-menu'
+Plugin 'autoload_cscope.vim'
 set cscopequickfix=s-,c-,d-,i-,t-,e-  
 nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
@@ -112,16 +110,14 @@ nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
 
 
-"supertab
-Bundle 'SuperTab'
-let g:SuperTabDefaultCompletionType="context"  
 
 "OmniCppComplete
-set nocp
-filetype plugin on
+"Plugin 'OmniCppComplete'
+"set nocp
+"filetype plugin on
 
 "MiniBufExplorer
-Bundle 'minibufexplorerpp'
+Plugin 'minibufexplorerpp'
 let g:miniBufExplMapWindowNavVim = 1 
 let g:miniBufExplMapWindowNavArrows = 1 
 let g:miniBufExplMapCTabSwitchBufs = 1 
@@ -131,7 +127,7 @@ let g:miniBufExplMoreThanOne=0
 
 
 "NerdTree
-Bundle 'The-NERD-tree'
+Plugin 'The-NERD-tree'
 let g:NERDTree_title="[NERDTree]"
 let g:winManagerWindowLayout="NERDTree|TagList"
 
@@ -145,35 +141,72 @@ endfunction
 nmap wm :WMToggle<CR>
 
 "grep
-Bundle 'grep.vim'
-nnoremap <silent> <F3> :Grep<CR>
+Plugin 'grep.vim'
 
-"Bundle 'project.tar.gz'
-Bundle 'project.vim'
-Bundle 'NERD_tree-Project'
-Bundle 'sessionman.vim'
+Plugin 'project.vim'
+Plugin 'NERD_tree-Project'
+Plugin 'sessionman.vim'
 
-
-Bundle 'ctrlp.vim'
-"set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
-let g:ctrlp_max_height = 100
-let g:ctrlp_max_files =0 
-let g:ctrlp_by_filename = 0
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+"目录
+"ctrlp...............................................................................................
+"Plugin 'ctrlp.vim'
+""set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
+"let g:ctrlp_max_height = 100
+"let g:ctrlp_max_files =0 
+"let g:ctrlp_by_filename = 0
+"let g:ctrlp_clear_cache_on_exit = 0
+"let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 "noremap <C-W><C-U> :CtrlPMRU<CR>
 "nnoremap <C-W>u :CtrlPMRU<CR>
-
-Bundle 'genutils'
-"Bundle 'lookupfile'
-"Bundle 'Command-T'
-""""""""""""""""""""""""""""""
-" lookupfile setting
-""""""""""""""""""""""""""""""
+"ctrlp...............................................................................................
+"Plugin 'FuzzyFinder'
+Plugin 'Command-T'
 
 
 
-"Bundle 'Acpp'
-Bundle 'a.vim'
-Bundle 'The-NERD-Commenter'
-Bundle 'EasyMotion'
+Plugin 'OmniCppComplete'
+"clang"---------------------------------------------------------------------------------------------------------
+Plugin 'clang-complete'
+let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
+Plugin 'AutoComplPop'
+"supertab
+Plugin 'SuperTab'
+"clang"---------------------------------------------------------------------------------------------------------
+
+"jedi+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Plugin 'wellcomez/jedi-vim'
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-p>"
+let g:jedi#rename_command = "<leader>r"
+let g:jedi#show_call_signatures = "1"
+"jedi+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+"Plugin 'lua.vim'
+"Plugin 'lua_omni'
+
+"Plugin 'javascript.vim'
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+Plugin 'XQuery-indentomnicompleteftplugin'
+"Plugin 'marijnh/tern_for_vim'
+
+
+
+Plugin 'a.vim'
+Plugin 'The-NERD-Commenter'
+Plugin 'EasyMotion'
+
+
+
+
+"
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'joonty/vdebug'
+Plugin 'jquery'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
