@@ -4,7 +4,6 @@ colorscheme desert
 filetype plugin on
 filetype plugin indent on     " required!
 set completeopt=longest,menu
-colorscheme darkblue
 set modifiable
 set mouse=a
 set ignorecase
@@ -149,25 +148,28 @@ Plugin 'sessionman.vim'
 
 "目录
 "ctrlp...............................................................................................
-"Plugin 'ctrlp.vim'
-""set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
-"let g:ctrlp_max_height = 100
-"let g:ctrlp_max_files =0 
-"let g:ctrlp_by_filename = 0
-"let g:ctrlp_clear_cache_on_exit = 0
-"let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-"noremap <C-W><C-U> :CtrlPMRU<CR>
-"nnoremap <C-W>u :CtrlPMRU<CR>
+Plugin 'ctrlp.vim'
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
+let g:ctrlp_max_height = 100
+let g:ctrlp_max_files =0 
+let g:ctrlp_by_filename = 0
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+noremap <C-W><C-U> :CtrlPMRU<CR>
+nnoremap <C-W>u :CtrlPMRU<CR>
 "ctrlp...............................................................................................
 "Plugin 'FuzzyFinder'
-Plugin 'Command-T'
+"Plugin 'Command-T'
 
-
-
+"'OmniCppComplete'OmniCppCompleteOmniCppCompleteOmniCppCompleteOmniCppCompleteOmniCppComplete
 Plugin 'OmniCppComplete'
+"OmniCppComplete'OmniCppCompleteOmniCppCompleteOmniCppCompleteOmniCppCompleteOmniCppComplete
+
 "clang"---------------------------------------------------------------------------------------------------------
 Plugin 'clang-complete'
 let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
+"clang"---------------------------------------------------------------------------------------------------------
+
 Plugin 'AutoComplPop'
 "supertab
 Plugin 'SuperTab'
@@ -205,8 +207,15 @@ Plugin 'EasyMotion'
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'joonty/vdebug'
 Plugin 'jquery'
-
+Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
