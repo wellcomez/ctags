@@ -7,6 +7,10 @@ set completeopt=longest,menu
 set modifiable
 set mouse=a
 set ignorecase
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -190,9 +194,19 @@ let g:jedi#show_call_signatures = "1"
 "Plugin 'lua_omni'
 
 "Plugin 'javascript.vim'
+Plugin 'JavaScript-syntax'
+Plugin 'Better-Javascript-Indentation'
+Plugin 'jquery'
+Plugin 'neocomplcache'
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 Plugin 'XQuery-indentomnicompleteftplugin'
-"Plugin 'marijnh/tern_for_vim'
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+Plugin 'marijnh/tern_for_vim'
 
 
 
@@ -202,11 +216,23 @@ Plugin 'EasyMotion'
 
 
 
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+
 
 "
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'joonty/vdebug'
-Plugin 'jquery'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
