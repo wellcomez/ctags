@@ -3,6 +3,9 @@ filetype off                  " required!
 colorscheme desert 
 filetype plugin on
 filetype plugin indent on     " required!
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
 set completeopt=longest,menu
 set modifiable
 set mouse=a
