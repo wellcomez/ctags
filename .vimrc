@@ -1,6 +1,8 @@
 set nocompatible              " be iMproved
-filetype off                  " required!
-colorscheme desert 
+filetype off                  " require!
+if has("gui_running")
+    colorscheme koehler 
+endif
 filetype plugin on
 filetype plugin indent on     " required!
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
@@ -14,6 +16,10 @@ set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
+"set list lcs=tab:\¦\
+set cuc
+set cursorline
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -58,7 +64,7 @@ Plugin 'filetype.vim'
 Plugin 'winmanager'
 Plugin 'ctags.vim'
 "Plugin 'TagsMenu.zip'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 "Plugin 'gtags.vim'
 "Plugin 'GtagsClient'
 "Plugin 'gtags-multiwindow-browsing'
@@ -173,8 +179,8 @@ Plugin 'OmniCppComplete'
 "OmniCppComplete'OmniCppCompleteOmniCppCompleteOmniCppCompleteOmniCppCompleteOmniCppComplete
 
 "clang"---------------------------------------------------------------------------------------------------------
-Plugin 'clang-complete'
-let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
+"Plugin 'clang-complete'
+"let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
 "clang"---------------------------------------------------------------------------------------------------------
 
 Plugin 'AutoComplPop'
@@ -221,15 +227,15 @@ Plugin 'EasyMotion'
 
 
 " Track the engine.
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
 
 
 
@@ -239,11 +245,11 @@ let g:UltiSnipsEditSplit="vertical"
 Plugin 'joonty/vdebug'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"Plugin 'Valloric/YouCompleteMe'
+"nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+"nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+"nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
