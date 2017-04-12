@@ -71,16 +71,17 @@ set wildmenu
 
 " >>>>
 " 插件安装
-if !exists('g:spf13_no_autochdir')
- autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
- " Always switch to the current file directory
-endif
+"autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | cd g:rootdir| endif
 " vundle 环境设置
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
-
+"Plugin 'vim-rooter'
+let g:rootdir = getcwd()
+autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(g:rootdir)
+autocmd VimEnter,BufEnter * set noautochdir | execute 'cd' fnameescape(g:rootdir)
+"autocmd VimEnter,BufEnter| execute 'cd' fnameescape(g:rootdir)
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'altercation/vim-colors-solarized'
@@ -117,7 +118,8 @@ let g:ycm_confirm_extra_conf=0
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
 " 引入 C++ 标准库tags
-set tags+=/data/misc/software/misc./vim/stdcpp.tags
+"set tags+=/data/misc/software/misc./vim/stdcpp.tags
+set tags=tag;/
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
 inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
@@ -559,7 +561,7 @@ nmap wm :NERDTreeToggle<CR>
 " 设置 NERDTree 子窗口宽度
 let NERDTreeWinSize=22
 " 设置 NERDTree 子窗口位置
-let NERDTreeWinPos="right"
+let NERDTreeWinPos="left"
 " 显示隐藏文件
 let NERDTreeShowHidden=1
 " NERDTree 子窗口中不显示冗余帮助信息
@@ -635,3 +637,7 @@ augroup filetype
     au! BufRead,BufNewFile *.td     set filetype=tablegen
 augroup END
 set wrap
+set noautochdir
+"let g:rooter_change_directory_for_non_project_files = 'getcwd'
+
+
