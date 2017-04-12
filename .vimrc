@@ -9,7 +9,7 @@ let mapleader="\\"
 filetype on
 " 根据侦测到的不同类型加载对应的插件
 filetype plugin on
-
+set mouse=a
 " <<
 
 " >>
@@ -94,7 +94,8 @@ Plugin 'derekwyatt/vim-fswitch'
 Plugin 'kshenoy/vim-signature'
 Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
 Plugin 'majutsushi/tagbar'
-Plugin 'ctags.vim'
+"Plugin 'ctags.vim'
+Plugin 'gtags.vim'
 autocmd BufRead,BufNewFile *.mm :set ft=cpp
 
 Plugin 'vim-scripts/indexer.tar.gz'
@@ -153,6 +154,8 @@ Plugin 'cscope.vim'
 Plugin 'cscope-menu'
 Plugin 'autoload_cscope.vim'
 set cscopequickfix=s-,c-,d-,i-,t-,e-  
+set cscopeprg=gtags-cscope
+cs add GTAGS
 nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
