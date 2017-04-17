@@ -83,6 +83,7 @@ autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(g:rootdir)
 autocmd VimEnter,BufEnter * set noautochdir | execute 'cd' fnameescape(g:rootdir)
 "autocmd VimEnter,BufEnter| execute 'cd' fnameescape(g:rootdir)
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'winmanager'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
@@ -93,8 +94,14 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'kshenoy/vim-signature'
 Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 "Plugin 'ctags.vim'
+""Tagbar........................................................................................
+"Plugin 'Tagbar'
+""let g:TagbarToggle = 'tb'
+"nmap <F9> :TagbarToggle<CR>
+""Tagbar........................................................................................
+
 Plugin 'gtags.vim'
 autocmd BufRead,BufNewFile *.mm :set ft=cpp
 
@@ -136,7 +143,6 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 
 
 Plugin 'derekwyatt/vim-protodef'
-Plugin 'scrooloose/nerdtree'
 au CursorHold * checktime
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
@@ -344,84 +350,12 @@ let g:SignatureMap = {
 " <<
 
 " >>
-" 标签列表
-
-" 设置 tagbar 子窗口的位置出现在主编辑区的左边
-let tagbar_left=1
-" 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
-" nnoremap <Leader>ilt :TagbarToggle<CR>
-nmap <F9> :TagbarToggle<CR>
-" 设置标签子窗口的宽度
-let tagbar_width=32
-" tagbar 子窗口中不显示冗余帮助信息
-let g:tagbar_compact=1
-" 设置 ctags 对哪些代码标识符生成标签
-let g:tagbar_type_cpp = {
-     \ 'ctagstype' : 'c++',
-     \ 'kinds'     : [
-         \ 'c:classes:0:1',
-         \ 'd:macros:0:1',
-         \ 'e:enumerators:0:0', 
-         \ 'f:functions:0:1',
-         \ 'g:enumeration:0:1',
-         \ 'l:local:0:1',
-         \ 'm:members:0:1',
-         \ 'n:namespaces:0:1',
-         \ 'p:functions_prototypes:0:1',
-         \ 's:structs:0:1',
-         \ 't:typedefs:0:1',
-         \ 'u:unions:0:1',
-         \ 'v:global:0:1',
-         \ 'x:external:0:1'
-     \ ],
-     \ 'sro'        : '::',
-     \ 'kind2scope' : {
-         \ 'g' : 'enum',
-         \ 'n' : 'namespace',
-         \ 'c' : 'class',
-         \ 's' : 'struct',
-         \ 'u' : 'union'
-     \ },
-     \ 'scope2kind' : {
-         \ 'enum'      : 'g',
-         \ 'namespace' : 'n',
-         \ 'class'     : 'c',
-         \ 'struct'    : 's',
-         \ 'union'     : 'u'
-     \ }
-\ }
-
-let g:tagbar_type_objc = {
-  \ 'ctagstype': 'objc',
-  \ 'ctagsargs': [
-    \ '-f',
-    \ '-',
-    \ '--excmd=pattern',
-    \ '--extra=',
-    \ '--format=2',
-    \ '--fields=nksaSmt',
-    \ '--options=' . expand('~/.ctags'),
-    \ '--objc-kinds=-N',
-  \ ],
-  \ 'sro': ' ',
-  \ 'kinds': [
-    \ 'c:constant',
-    \ 'e:enum',
-    \ 't:typedef',
-    \ 'i:interface',
-    \ 'P:protocol',
-    \ 'p:property',
-    \ 'I:implementation',
-    \ 'M:method',
-    \ 'g:pragma',
-  \ ],
-  \ }
 " <<
 
 " >>
 " 代码导航
  
-" 基于标签的代码导航
+"基于标签的代码导航
 
 " 设置插件 indexer 调用 ctags 的参数
 " 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v
@@ -551,27 +485,62 @@ source $VIMRUNTIME/ftplugin/man.vim
 
 " 定义:Man命令查看各类man信息的快捷键
 nmap <Leader>man :Man 3 <cword><CR>
-
+Plugin 'Tagbar'
 " <<
 
 " >>
 " 工程文件浏览
 
 " 工程文件浏览
+"Taglist
+" F4:  Switch on/off TagList
+"nnoremap <unique> <silent> <F4> :TlistToggle<CR>
+"nnoremap <unique> <silent> <F1> :NERDTreeToggle <CR>
+Plugin 'taglist.vim'
+"let Tlist_Ctags_Cmd = $VIM.'/vimfiles/ctags.exe' " location of ctags tool 
+let Tlist_Show_One_File = 1 " Displaying tags for only one file~
+let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself 
+let Tlist_Use_Right_Window = 1 " split to the right side of the screen 
+let Tlist_Sort_Type = "order" " sort by order or name
+let Tlist_Display_Prototype = 0 " do not show prototypes and not tags in the taglist window.
+let Tlist_Compart_Format = 1 " Remove extra information and blank lines from the taglist window.
+let Tlist_GainFocus_On_ToggleOpen = 1 " Jump to taglist window on open.
+let Tlist_Display_Tag_Scope = 1 " Show tag scope next to the tag name.
+let Tlist_Close_On_Select = 0 " Close the taglist window when a file or tag is selected.
+let Tlist_BackToEditBuffer = 0 " If no close on select, let the user choose back to edit buffer or not
+let Tlist_Enable_Fold_Column = 0 " Don't Show the fold indicator column in the taglist window.
+let Tlist_WinWidth = 40
+let Tlist_Compact_Format = 1 " do not show help
+"let Tlist_Ctags_Cmd ="/Users/zhujialai/Downloads/ctags-ObjC-5.8.1-master/ctags"
+"/usr/bin/ctags"
+autocmd BufRead,BufNewFile *.mm :set ft=objc
+"let tlist_objc_settings    = 'ObjectiveC;i:interface;c:class;m:method;p:property'
+let tlist_objc_settings    = 'ObjC;i:interface;P:property;I:implementations;M:instanceMethod;C:methods;Z:protocols'
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-nmap wm :NERDTreeToggle<CR>
-" 设置 NERDTree 子窗口宽度
-let NERDTreeWinSize=22
-" 设置 NERDTree 子窗口位置
-let NERDTreeWinPos="left"
-" 显示隐藏文件
-let NERDTreeShowHidden=1
-" NERDTree 子窗口中不显示冗余帮助信息
-let NERDTreeMinimalUI=1
-" 删除文件时自动删除文件对应 buffer
-let NERDTreeAutoDeleteBuffer=1
+"MiniBufExplorer
+Plugin 'minibufexplorerpp'
+let g:miniBufExplMapWindowNavVim = 1 
+let g:miniBufExplMapWindowNavArrows = 1 
+let g:miniBufExplMapCTabSwitchBufs = 1 
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplMoreThanOne=0
 
+
+
+"NerdTree
+Plugin 'The-NERD-tree'
+let g:NERDTree_title="[NERDTree]"
+let g:winManagerWindowLayout="NERDTree|TagList"
+
+function! NERDTree_Start()
+	exec 'NERDTree'
+endfunction
+
+function! NERDTree_IsValid()
+	return 1
+endfunction
+nmap wm :WMToggle<CR>
 " >>
 " 多文档编辑
  
