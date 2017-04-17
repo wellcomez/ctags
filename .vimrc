@@ -22,7 +22,7 @@ set autoread
 "vnoremap <Leader>y "+y
 "" 设置快捷键将系统剪贴板内容粘贴至vim
 "nmap <Leader>p "+p
-
+ 
 "" 定义快捷键关闭当前分割窗口
 "nmap <Leader>q :q<CR>
 "" 定义快捷键保存当前窗口内容
@@ -89,7 +89,7 @@ Plugin 'tomasr/molokai'
 Plugin 'vim-scripts/phd'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'nathanaelkane/vim-indent-guides'
+"Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'kshenoy/vim-signature'
 Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
@@ -105,7 +105,7 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 " YCM 补全菜单配色
 " 菜单
@@ -282,15 +282,15 @@ set shiftwidth=4
 " 让 vim 把连续数量的空格视为一个制表符
 set softtabstop=4
 
-" 缩进可视化插件 Indent Guides
-" 随 vim 自启动
-let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-let g:indent_guides_start_level=2
-" 色块宽度
-let g:indent_guides_guide_size=1
-" 快捷键 i 开/关缩进可视化
-nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+"" 缩进可视化插件 Indent Guides
+"" 随 vim 自启动
+"let g:indent_guides_enable_on_vim_startup=1
+"" 从第二层开始可视化显示缩进
+"let g:indent_guides_start_level=2
+"" 色块宽度
+"let g:indent_guides_guide_size=1
+"" 快捷键 i 开/关缩进可视化
+"nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " <<
 
@@ -299,9 +299,9 @@ nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " 基于缩进或语法进行代码折叠
 "set foldmethod=indent
-set foldmethod=syntax
-" 启动 vim 时关闭折叠代码
-set nofoldenable
+"set foldmethod=syntax
+"" 启动 vim 时关闭折叠代码
+"set nofoldenable
 
 " <<
 
@@ -492,7 +492,7 @@ nnoremap <Leader>rwc :call Replace(1, 1, input('Replace '.expand('<cword>').' wi
 
 " 模板补全
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
-let g:UltiSnipsSnippetDirectories=["mysnippets"]
+"let g:UltiSnipsSnippetDirectories=["mysnippets"]
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
@@ -624,11 +624,11 @@ let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
 " 调用 gundo 树
 nnoremap <Leader>ud :GundoToggle<CR>
 Plugin 'EasyGrep'
-"let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2, 
-"let g:EasyGrepCommand = 0  " Use vimgrep:0, grepprg:1
-"let g:EasyGrepRecursive  = 1 " Recursive searching
-"let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
-let g:EasyGrepFilesToExclude = "*.bak, *~, cscope.*.*, *.a, *.o, *.pyc, *.bak,cscope*,tags"
+let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2, 
+let g:EasyGrepCommand = 0  " Use vimgrep:0, grepprg:1
+let g:EasyGrepRecursive  = 1 " Recursive searching
+let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
+let g:EasyGrepFilesToExclude = "tags,*.bak,*,*~,cscope.*,*.a,*.o,*.pyc,*.log,GTAGS,*.list"
 
 "Plugin 'Command-T'
 Plugin 'garious/vim-llvm'
