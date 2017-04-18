@@ -152,6 +152,49 @@ Plugin 'suan/vim-instant-markdown'
 Plugin 'lilydjwg/fcitx.vim'
 Plugin 'AutoComplPop'
 Plugin 'project.vim'
+" Auto Session Save/Restore
+function GetProjectName()
+    " Get the current editing file list, Unix only
+    let edit_files = split(system("ps -o command= -p " . getpid()))
+    if len(edit_files) >= 2
+        let project_path = edit_files[1]
+        if project_path[0] != '/'
+            let project_path = getcwd() . project_path
+        endif
+    else
+        let project_path = getcwd()
+    endif
+
+    return shellescape(substitute(project_path, '[/]', '', 'g'))
+endfunction
+
+function SaveSession()
+    "NERDTree doesn't support session, so close before saving
+    execute ':NERDTreeClose' 
+    let project_name = GetProjectName()
+    execute 'mksession! ~/.vim/sessions/' . project_name
+endfunction
+
+function RestoreSession()
+    let session_path = expand('~/.vim/sessions/' . GetProjectName())
+    if filereadable(session_path)
+        execute 'so ' . session_path
+        if bufexists(1)
+            for l in range(1, bufnr('$'))
+                if bufwinnr(l) == -1
+                    exec 'sbuffer ' . l
+                endif
+            endfor
+        endif
+    endif
+    "Make sure the syntax is on
+    syntax on 
+endfunction
+
+nmap ssa :call SaveSession()
+smap SO :call RestoreSession()
+autocmd VimLeave * call SaveSession()
+autocmd VimEnter * call RestoreSession()
 
 
 
@@ -174,22 +217,34 @@ nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
 
 Plugin 'airblade/vim-gitgutter'
 
-"ctrlp...............................................................................................
-Plugin 'ctrlp.vim'
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
-let g:ctrlp_max_height = 100
-let g:ctrlp_max_files =0 
-let g:ctrlp_by_filename = 0
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-noremap <C-W><C-U> :CtrlPMRU<CR>
-nnoremap <C-W>u :CtrlPMRU<CR>
+""ctrlp...............................................................................................
+"Plugin 'ctrlp.vim'
+"set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,        " Linux/MacOSX
+"let g:ctrlp_max_height = 100
+"let g:ctrlp_max_files =0 
+"let g:ctrlp_by_filename = 0
+"let g:ctrlp_clear_cache_on_exit = 0
+"let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+"set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
+"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"let g:ctrlp_custom_ignore = {
+  "\ 'dir':  '\v[\/]\.(git|hg|svn|*)$',
+  "\ 'file': '\v\.(exe|so|dll)$',
+  "\ 'link': 'some_bad_symbolic_links',
+  "\ }
+"noremap <C-W><C-U> :CtrlPMRU<CR>
+"nnoremap <C-W>u :CtrlPMRU<CR>
+"
+"Plugin "wincent/command-t"
+noremap <C-p> :CommandT<CR>
 
 " 插件列表结束
 call vundle#end()
 filetype plugin indent on
 " <<<<
-
+on
 " 配色方案
 " 
 if has("gui_running")
@@ -205,17 +260,17 @@ endif
 " 营造专注气氛
 
 " 禁止光标闪烁
-set gcr=a:block-blinkon0
+"set gcr=a:block-blinkon0
 
 " 禁止显示滚动条
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
-set guioptions-=R
+"set guioptions-=l
+"set guioptions-=L
+"set guioptions-=r
+"set guioptions-=R
 
 " 禁止显示菜单和工具条
-set guioptions-=m
-set guioptions-=T
+"set guioptions-=m
+"set guioptions-=T
 
 " 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
 fun! ToggleFullscreen()
@@ -532,6 +587,7 @@ let g:miniBufExplMoreThanOne=0
 Plugin 'The-NERD-tree'
 let g:NERDTree_title="[NERDTree]"
 let g:winManagerWindowLayout="NERDTree|TagList"
+let g:winManagerWindowLayout="NERDTree|Tagbar"
 
 function! NERDTree_Start()
 	exec 'NERDTree'
@@ -599,7 +655,7 @@ let g:EasyGrepRecursive  = 1 " Recursive searching
 let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
 let g:EasyGrepFilesToExclude = "tags,*.bak,*,*~,cscope.*,*.a,*.o,*.pyc,*.log,GTAGS,*.list"
 
-"Plugin 'Command-T'
+Plugin 'Command-T'
 Plugin 'garious/vim-llvm'
 Plugin 'openurl'
 augroup filetype
