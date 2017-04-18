@@ -113,6 +113,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
 "Plugin 'SirVer/ultisnips'
+Plugin 'rdnetto/YCM-Generator'
 Plugin 'Valloric/YouCompleteMe'
 " YCM 补全菜单配色
 " 菜单
@@ -217,27 +218,28 @@ nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
 
 Plugin 'airblade/vim-gitgutter'
 
-""ctrlp...............................................................................................
-"Plugin 'ctrlp.vim'
-"set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,        " Linux/MacOSX
-"let g:ctrlp_max_height = 100
-"let g:ctrlp_max_files =0 
-"let g:ctrlp_by_filename = 0
-"let g:ctrlp_clear_cache_on_exit = 0
-"let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-"set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
-"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+"ctrlp...............................................................................................
+Plugin 'ctrlp.vim'
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,        " Linux/MacOSX
+let g:ctrlp_max_height = 100
+let g:ctrlp_max_files =0 
+let g:ctrlp_by_filename = 0
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
-"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-"let g:ctrlp_custom_ignore = {
-  "\ 'dir':  '\v[\/]\.(git|hg|svn|*)$',
-  "\ 'file': '\v\.(exe|so|dll)$',
-  "\ 'link': 'some_bad_symbolic_links',
-  "\ }
-"noremap <C-W><C-U> :CtrlPMRU<CR>
-"nnoremap <C-W>u :CtrlPMRU<CR>
-"
-"Plugin "wincent/command-t"
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|*)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+noremap <C-W><C-U> :CtrlPMRU<CR>
+noremap <C-W><C-R> :CtrlPBufTag<CR>
+nnoremap <C-W>u :CtrlPMRU<CR>
+
+Plugin "wincent/command-t"
 noremap <C-p> :CommandT<CR>
 
 " 插件列表结束
@@ -587,7 +589,6 @@ let g:miniBufExplMoreThanOne=0
 Plugin 'The-NERD-tree'
 let g:NERDTree_title="[NERDTree]"
 let g:winManagerWindowLayout="NERDTree|TagList"
-let g:winManagerWindowLayout="NERDTree|Tagbar"
 
 function! NERDTree_Start()
 	exec 'NERDTree'
