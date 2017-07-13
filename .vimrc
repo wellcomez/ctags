@@ -79,11 +79,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 "Plugin 'vim-rooter'
 let g:rootdir = getcwd()
-"autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(g:rootdir)
-"autocmd VimEnter,BufEnter * set noautochdir | execute 'cd' fnameescape(g:rootdir)
+autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(g:rootdir)
+autocmd VimEnter,BufEnter * set noautochdir | execute 'cd' fnameescape(g:rootdir)
 "autocmd VimEnter,BufEnter| execute 'cd' fnameescape(g:rootdir)
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'winmanager'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
@@ -94,14 +93,8 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'kshenoy/vim-signature'
 Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
-"Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 "Plugin 'ctags.vim'
-""Tagbar........................................................................................
-"Plugin 'Tagbar'
-""let g:TagbarToggle = 'tb'
-"nmap <F9> :TagbarToggle<CR>
-""Tagbar........................................................................................
-
 Plugin 'gtags.vim'
 autocmd BufRead,BufNewFile *.mm :set ft=cpp
 
@@ -113,7 +106,6 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-scripts/DrawIt'
 "Plugin 'SirVer/ultisnips'
-Plugin 'rdnetto/YCM-Generator'
 Plugin 'Valloric/YouCompleteMe'
 " YCM 补全菜单配色
 " 菜单
@@ -144,6 +136,7 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 
 
 Plugin 'derekwyatt/vim-protodef'
+Plugin 'scrooloose/nerdtree'
 au CursorHold * checktime
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'gcmt/wildfire.vim'
@@ -155,17 +148,14 @@ Plugin 'AutoComplPop'
 Plugin 'project.vim'
 
 
-Plugin 'hari-rangarajan/CCTree' 
-let g:CCTreeCscopeDb = "cscope.out"
-let g:CCTreeRecursiveDepth=5
+
 "cscope
 Plugin 'cscope.vim'
 Plugin 'cscope-menu'
 Plugin 'autoload_cscope.vim'
-Plugin 'gtags-cscope.vim'
 set cscopequickfix=s-,c-,d-,i-,t-,e-  
 set cscopeprg=gtags-cscope
-"cs add GTAGS
+cs add GTAGS
 nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -180,33 +170,21 @@ Plugin 'airblade/vim-gitgutter'
 
 "ctrlp...............................................................................................
 Plugin 'ctrlp.vim'
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,        " Linux/MacOSX
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
 let g:ctrlp_max_height = 100
 let g:ctrlp_max_files =0 
 let g:ctrlp_by_filename = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|*)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
 noremap <C-W><C-U> :CtrlPMRU<CR>
-noremap <C-W><C-R> :CtrlPBufTag<CR>
+noremap <C-r> :CtrlPBufTag<CR>
 nnoremap <C-W>u :CtrlPMRU<CR>
-
-"Plugin "wincent/command-t"
-noremap <C-p> :CommandT<CR>
 
 " 插件列表结束
 call vundle#end()
 filetype plugin indent on
 " <<<<
-on
+
 " 配色方案
 " 
 if has("gui_running")
@@ -222,21 +200,21 @@ endif
 " 营造专注气氛
 
 " 禁止光标闪烁
-"set gcr=a:block-blinkon0
+set gcr=a:block-blinkon0
 
 " 禁止显示滚动条
-"set guioptions-=l
-"set guioptions-=L
-"set guioptions-=r
-"set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
 
 " 禁止显示菜单和工具条
-"set guioptions-=m
-"set guioptions-=T
+set guioptions-=m
+set guioptions-=T
 
 " 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
 fun! ToggleFullscreen()
-    call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
+	call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")
 endf
 " 全屏开/关快捷键
 map <silent> <F11> :call ToggleFullscreen()<CR>
@@ -367,12 +345,84 @@ let g:SignatureMap = {
 " <<
 
 " >>
+" 标签列表
+
+" 设置 tagbar 子窗口的位置出现在主编辑区的左边
+let tagbar_left=1
+" 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
+" nnoremap <Leader>ilt :TagbarToggle<CR>
+nmap <F9> :TagbarToggle<CR>
+" 设置标签子窗口的宽度
+let tagbar_width=32
+" tagbar 子窗口中不显示冗余帮助信息
+let g:tagbar_compact=1
+" 设置 ctags 对哪些代码标识符生成标签
+let g:tagbar_type_cpp = {
+     \ 'ctagstype' : 'c++',
+     \ 'kinds'     : [
+         \ 'c:classes:0:1',
+         \ 'd:macros:0:1',
+         \ 'e:enumerators:0:0', 
+         \ 'f:functions:0:1',
+         \ 'g:enumeration:0:1',
+         \ 'l:local:0:1',
+         \ 'm:members:0:1',
+         \ 'n:namespaces:0:1',
+         \ 'p:functions_prototypes:0:1',
+         \ 's:structs:0:1',
+         \ 't:typedefs:0:1',
+         \ 'u:unions:0:1',
+         \ 'v:global:0:1',
+         \ 'x:external:0:1'
+     \ ],
+     \ 'sro'        : '::',
+     \ 'kind2scope' : {
+         \ 'g' : 'enum',
+         \ 'n' : 'namespace',
+         \ 'c' : 'class',
+         \ 's' : 'struct',
+         \ 'u' : 'union'
+     \ },
+     \ 'scope2kind' : {
+         \ 'enum'      : 'g',
+         \ 'namespace' : 'n',
+         \ 'class'     : 'c',
+         \ 'struct'    : 's',
+         \ 'union'     : 'u'
+     \ }
+\ }
+
+let g:tagbar_type_objc = {
+  \ 'ctagstype': 'objc',
+  \ 'ctagsargs': [
+    \ '-f',
+    \ '-',
+    \ '--excmd=pattern',
+    \ '--extra=',
+    \ '--format=2',
+    \ '--fields=nksaSmt',
+    \ '--options=' . expand('~/.ctags'),
+    \ '--objc-kinds=-N',
+  \ ],
+  \ 'sro': ' ',
+  \ 'kinds': [
+    \ 'c:constant',
+    \ 'e:enum',
+    \ 't:typedef',
+    \ 'i:interface',
+    \ 'P:protocol',
+    \ 'p:property',
+    \ 'I:implementation',
+    \ 'M:method',
+    \ 'g:pragma',
+  \ ],
+  \ }
 " <<
 
 " >>
 " 代码导航
  
-"基于标签的代码导航
+" 基于标签的代码导航
 
 " 设置插件 indexer 调用 ctags 的参数
 " 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+l+p+x+c+d+e+f+g+m+n+s+t+u+v
@@ -502,62 +552,27 @@ source $VIMRUNTIME/ftplugin/man.vim
 
 " 定义:Man命令查看各类man信息的快捷键
 nmap <Leader>man :Man 3 <cword><CR>
-Plugin 'Tagbar'
+
 " <<
 
 " >>
 " 工程文件浏览
 
 " 工程文件浏览
-"Taglist
-" F4:  Switch on/off TagList
-"nnoremap <unique> <silent> <F4> :TlistToggle<CR>
-"nnoremap <unique> <silent> <F1> :NERDTreeToggle <CR>
-Plugin 'taglist.vim'
-"let Tlist_Ctags_Cmd = $VIM.'/vimfiles/ctags.exe' " location of ctags tool 
-let Tlist_Show_One_File = 1 " Displaying tags for only one file~
-let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself 
-let Tlist_Use_Right_Window = 1 " split to the right side of the screen 
-let Tlist_Sort_Type = "order" " sort by order or name
-let Tlist_Display_Prototype = 0 " do not show prototypes and not tags in the taglist window.
-let Tlist_Compart_Format = 1 " Remove extra information and blank lines from the taglist window.
-let Tlist_GainFocus_On_ToggleOpen = 1 " Jump to taglist window on open.
-let Tlist_Display_Tag_Scope = 1 " Show tag scope next to the tag name.
-let Tlist_Close_On_Select = 0 " Close the taglist window when a file or tag is selected.
-let Tlist_BackToEditBuffer = 0 " If no close on select, let the user choose back to edit buffer or not
-let Tlist_Enable_Fold_Column = 0 " Don't Show the fold indicator column in the taglist window.
-let Tlist_WinWidth = 40
-let Tlist_Compact_Format = 1 " do not show help
-"let Tlist_Ctags_Cmd ="/Users/zhujialai/Downloads/ctags-ObjC-5.8.1-master/ctags"
-"/usr/bin/ctags"
-autocmd BufRead,BufNewFile *.mm :set ft=objc
-"let tlist_objc_settings    = 'ObjectiveC;i:interface;c:class;m:method;p:property'
-let tlist_objc_settings    = 'ObjC;i:interface;P:property;I:implementations;M:instanceMethod;C:methods;Z:protocols'
 
 " 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
-"MiniBufExplorer
-Plugin 'minibufexplorerpp'
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplMoreThanOne=0
+nmap wm :NERDTreeToggle<CR>
+" 设置 NERDTree 子窗口宽度
+let NERDTreeWinSize=22
+" 设置 NERDTree 子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
 
-
-
-"NerdTree
-Plugin 'The-NERD-tree'
-let g:NERDTree_title="[NERDTree]"
-let g:winManagerWindowLayout="NERDTree|TagList"
-
-function! NERDTree_Start()
-    exec 'NERDTree'
-endfunction
-
-function! NERDTree_IsValid()
-    return 1
-endfunction
-nmap wm :WMToggle<CR>
 " >>
 " 多文档编辑
  
@@ -574,23 +589,20 @@ map <C-S-Tab> :MBEbp<cr>
 " >>
 " 环境恢复
 
-"" 设置环境保存项
-"set sessionoptions="blank,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
+" 设置环境保存项
+set sessionoptions="blank,globals,localoptions,tabpages,sesdir,folds,help,options,resize,winpos,winsize"
 
-"" 保存 undo 历史。必须先行创建 .undo_history/
-"set undodir=~/.undo_history/
-"set undofile
+" 保存 undo 历史。必须先行创建 .undo_history/
+set undodir=~/.undo_history/
+set undofile
 
-"" 保存快捷键
-""map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
-"map <leader>ss :mksession! my.vim<cr>
+" 保存快捷键
+"map <leader>ss :mksession! my.vim<cr> :wviminfo! my.viminfo<cr>
+map <leader>ss :mksession! my.vim<cr>
 
-"" 恢复快捷键
-""map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
-"map <leader>rs :source my.vim<cr>
-
-"Plugin "xolox/vim-session"
-set sessionoptions-=tabpages
+" 恢复快捷键
+"map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
+map <leader>rs :source my.vim<cr>
 
 " <<
  
@@ -618,14 +630,11 @@ let g:EasyGrepCommand = 0  " Use vimgrep:0, grepprg:1
 let g:EasyGrepRecursive  = 1 " Recursive searching
 let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
 let g:EasyGrepFilesToExclude = "tags,*.bak,*,*~,cscope.*,*.a,*.o,*.pyc,*.log,GTAGS,*.list"
-let g:ag_working_path_mode="r"
-let g:ag_prg="/usr/local/Cellar/the_silver_searcher/0.31.0/bin/ag  --vimgrep"
+
 Plugin 'Command-T'
 Plugin 'garious/vim-llvm'
 Plugin 'openurl'
-"Plugin "derekwyatt/vim-fswitch"
-Plugin 'mileszs/ack.vim'
-augroup   filetype
+augroup filetype
     au! BufRead,BufNewFile *.ll     set filetype=llvm
 augroup END
 augroup filetype
@@ -634,4 +643,5 @@ augroup END
 set wrap
 set noautochdir
 "let g:rooter_change_directory_for_non_project_files = 'getcwd'
+
 
