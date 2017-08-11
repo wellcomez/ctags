@@ -85,14 +85,14 @@ autocmd VimEnter,BufEnter * set noautochdir | execute 'cd' fnameescape(g:rootdir
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
+"Plugin 'tomasr/molokai'
 Plugin 'vim-scripts/phd'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 "Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'kshenoy/vim-signature'
-Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
+"Plugin 'derekwyatt/vim-fswitch'
+"Plugin 'kshenoy/vim-signature'
+"Plugin 'vim-scripts/BOOKMARKS--Mark-and-Highlight-Full-Lines'
 Plugin 'majutsushi/tagbar'
 "Plugin 'ctags.vim'
 Plugin 'gtags.vim'
@@ -104,7 +104,7 @@ Plugin 'vim-scripts/vimprj'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/DrawIt'
+"Plugin 'vim-scripts/DrawIt'
 "Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 " YCM 补全菜单配色
@@ -170,6 +170,14 @@ Plugin 'airblade/vim-gitgutter'
 
 "ctrlp...............................................................................................
 Plugin 'ctrlp.vim'
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
 let g:ctrlp_max_height = 100
 let g:ctrlp_max_files =0 
@@ -180,8 +188,6 @@ noremap <C-W><C-U> :CtrlPMRU<CR>
 noremap <C-r> :CtrlPBufTag<CR>
 nnoremap <C-W>u :CtrlPMRU<CR>
 
-" 插件列表结束
-call vundle#end()
 filetype plugin indent on
 " <<<<
 
@@ -234,10 +240,6 @@ set ruler
 
 " 开启行号显示
 set number
-
-" 高亮显示当前行/列
-set cursorline
-set cursorcolumn
 
 " 高亮显示搜索结果
 set hlsearch
@@ -348,7 +350,7 @@ let g:SignatureMap = {
 " 标签列表
 
 " 设置 tagbar 子窗口的位置出现在主编辑区的左边
-let tagbar_left=1
+let tagbar_rigth=1
 " 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
 " nnoremap <Leader>ilt :TagbarToggle<CR>
 nmap <F9> :TagbarToggle<CR>
@@ -614,16 +616,16 @@ nmap <Leader>g :wa<CR>:cd build/<CR>:!rm -rf main<CR>:!cmake CMakeLists.txt<CR>:
 " 快速选中结对符内的文本
  
 " 快捷键
-map <SPACE> <Plug>(wildfire-fuel)
-vmap <S-SPACE> <Plug>(wildfire-water)
+"map <SPACE> <Plug>(wildfire-fuel)
+"vmap <S-SPACE> <Plug>(wildfire-water)
 
 " 适用于哪些结对符
-let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
+"let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip"]
 
 " <<
 
 " 调用 gundo 树
-nnoremap <Leader>ud :GundoToggle<CR>
+"nnoremap <Leader>ud :GundoToggle<CR>
 Plugin 'EasyGrep'
 let g:EasyGrepMode = 2     " All:0, Open Buffers:1, TrackExt:2, 
 let g:EasyGrepCommand = 0  " Use vimgrep:0, grepprg:1
@@ -631,9 +633,14 @@ let g:EasyGrepRecursive  = 1 " Recursive searching
 let g:EasyGrepIgnoreCase = 1 " not ignorecase:0
 let g:EasyGrepFilesToExclude = "tags,*.bak,*,*~,cscope.*,*.a,*.o,*.pyc,*.log,GTAGS,*.list"
 
+
+
+
+
+Plugin 'pseewald/nerdtree-tagbar-combined'
 Plugin 'Command-T'
 Plugin 'garious/vim-llvm'
-Plugin 'openurl'
+"Plugin 'openurl'
 augroup filetype
     au! BufRead,BufNewFile *.ll     set filetype=llvm
 augroup END
@@ -643,5 +650,13 @@ augroup END
 set wrap
 set noautochdir
 "let g:rooter_change_directory_for_non_project_files = 'getcwd'
-
-
+" 高亮显示当前行/列
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+au WinEnter *   highlight CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+au WinEnter *   highlight CursorColumn   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+set cursorline cursorcolumn
+"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+" 插件列表结束
+autocmd vimenter * ToggleNERDTreeAndTagbar 
+call vundle#end()
