@@ -152,7 +152,7 @@ Plugin 'project.vim'
 "cscope
 Plugin 'cscope.vim'
 Plugin 'cscope-menu'
-Plugin 'autoload_cscope.vim'
+"Plugin 'autoload_cscope.vim'
 set cscopequickfix=s-,c-,d-,i-,t-,e-  
 set cscopeprg=gtags-cscope
 cs add GTAGS
