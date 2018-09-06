@@ -145,7 +145,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'lilydjwg/fcitx.vim'
 Plugin 'AutoComplPop'
-Plugin 'project.vim'
+Plugin 'wellcomez/project.vim'
 
 
 
