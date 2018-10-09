@@ -24,7 +24,7 @@ function() {
             a && delete Object.prototype.toJSON;
             var b = document.createElement("iframe");
             b.style.display = "none";
-            b.src = "chromeInvoke://$(WINDOW_ID)#" + encodeURIComponent(k(l));
+            b.src = "https://$(WINDOW_ID)#" + encodeURIComponent(k(l));
             l = [];
             l.toJSON = null;
             document.body.appendChild(b);
@@ -43,7 +43,7 @@ function() {
     function q(a) {
         if (document && document.body) {
             var b = document.createElement("iframe");
-            b.src = "chromeInvokeImmediate://$(WINDOW_ID)#" + encodeURIComponent(k(a));
+            b.src = "https://$(WINDOW_ID)#" + encodeURIComponent(k(a));
             document.body.appendChild(b);
             document.body.removeChild(b)
         }
