@@ -358,7 +358,7 @@ call glaive#Install()
 Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 "autocmd BufReadPost *.* exec 'botright copen' 
-autocmd BufReadPost *.* call tagbar#autoopen()
+"autocmd BufReadPost *.* call tagbar#autoopen()
 exec 'colorscheme molokai'
 
 "exec 'Tagbar'
