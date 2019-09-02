@@ -44,8 +44,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 "加上/解开注释, 智能判断
 " >>
@@ -112,6 +113,9 @@ let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
+Plugin 'skywind3000/gutentags_plus'
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
 
 "coc_nvim
 "" if hidden is not set, TextEdit might fail.
@@ -231,10 +235,10 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-nmap <F4> :CocNext<CR>
-nmap <F3> :CocPrev<CR>
-" Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+"nmap <F4> :CocNext<CR>
+"nmap <F3> :CocPrev<CR>
+" Do default action for previous item.
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "coc_nvim
@@ -254,19 +258,19 @@ Plugin 'fholgado/minibufexpl.vim'
 Plugin 'AutoComplPop'
 "Plugin 'wellcomez/project.vim'
 "cscope
-Plugin 'cscope.vim'
-Plugin 'cscope-menu'
-Plugin 'autoload_cscope.vim'
-set cscopequickfix=s-,c-,d-,i-,t-,e-  
-set cscopeprg=gtags-cscope
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+"Plugin 'cscope.vim'
+"Plugin 'cscope-menu'
+"Plugin 'autoload_cscope.vim'
+"set cscopequickfix=s-,c-,d-,i-,t-,e-  
+"set cscopeprg=gtags-cscope
+nmap <C-_>s :GscopeFind s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>g :GscopeFind g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>c :GscopeFind c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>t :GscopeFind t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>e :GscopeFind e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>f :GscopeFind f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-_>i :GscopeFind i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-_>d :GscopeFind d <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
 
 Plugin 'airblade/vim-gitgutter'
@@ -290,6 +294,7 @@ noremap <C-W><C-U> :CtrlPMRU<CR>
 noremap <C-W><C-R> :CtrlPBufTag<CR>
 nnoremap <C-W>u :CtrlPMRU<CR>
 
+Plugin 'scrooloose/nerdcommenter'
 
 " 插件列表结束
 filetype plugin indent on
