@@ -44,9 +44,29 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+
 Plugin 'flazz/vim-colorschemes'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<c-t>"
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 
 "加上/解开注释, 智能判断
 " >>
@@ -236,15 +256,14 @@ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-"nmap <F4> :CocNext<CR>
-"nmap <F3> :CocPrev<CR>
 " Do default action for previous item.
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "coc_nvim
 
 " grep word under cursor
-nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+"nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+nnoremap <silent> <space>w  :Ag  <C-R>=expand("<cword>")<CR><CR>
 "coc_nvim
 
 
@@ -272,7 +291,8 @@ nmap <C-_>f :GscopeFind f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-_>i :GscopeFind i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-_>d :GscopeFind d <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
-
+nmap <F4> :cn<CR>
+nmap <F3> :cp<CR>
 Plugin 'airblade/vim-gitgutter'
 
 "ctrlp...............................................................................................

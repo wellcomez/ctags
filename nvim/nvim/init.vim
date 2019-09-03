@@ -44,8 +44,29 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin('~/.config/nvim/bundle/')
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+
 Plugin 'flazz/vim-colorschemes'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<c-t>"
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 
 "加上/解开注释, 智能判断
 " >>
@@ -83,7 +104,7 @@ nmap <F9> :TagbarToggle<CR>
 ""Tagbar........................................................................................
 
 Plugin 'gtags.vim'
-Plugin 'vim-gutentags'
+Plugin 'ludovicchabant/vim-gutentags'
 " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
@@ -112,6 +133,9 @@ let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
+Plugin 'skywind3000/gutentags_plus'
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
 
 "coc_nvim
 "" if hidden is not set, TextEdit might fail.
@@ -231,14 +255,15 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Do default action for previous item.
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "coc_nvim
 
 " grep word under cursor
-nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+"nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+nnoremap <silent> <space>w  :Ag  <C-R>=expand("<cword>")<CR><CR>
 "coc_nvim
 
 
@@ -252,21 +277,22 @@ Plugin 'fholgado/minibufexpl.vim'
 Plugin 'AutoComplPop'
 "Plugin 'wellcomez/project.vim'
 "cscope
-Plugin 'cscope.vim'
-Plugin 'cscope-menu'
-Plugin 'autoload_cscope.vim'
-set cscopequickfix=s-,c-,d-,i-,t-,e-  
-set cscopeprg=gtags-cscope
-nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+"Plugin 'cscope.vim'
+"Plugin 'cscope-menu'
+"Plugin 'autoload_cscope.vim'
+"set cscopequickfix=s-,c-,d-,i-,t-,e-  
+"set cscopeprg=gtags-cscope
+nmap <C-_>s :GscopeFind s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>g :GscopeFind g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>c :GscopeFind c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>t :GscopeFind t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>e :GscopeFind e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-_>f :GscopeFind f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-_>i :GscopeFind i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-_>d :GscopeFind d <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
-
+nmap <F4> :cn<CR>
+nmap <F3> :cp<CR>
 Plugin 'airblade/vim-gitgutter'
 
 "ctrlp...............................................................................................
@@ -288,6 +314,7 @@ noremap <C-W><C-U> :CtrlPMRU<CR>
 noremap <C-W><C-R> :CtrlPBufTag<CR>
 nnoremap <C-W>u :CtrlPMRU<CR>
 
+Plugin 'scrooloose/nerdcommenter'
 
 " 插件列表结束
 filetype plugin indent on
@@ -355,8 +382,8 @@ call glaive#Install()
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
 Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
-autocmd BufReadPost *.* exec 'botright copen' 
-autocmd BufReadPost *.* call tagbar#autoopen()
+"autocmd BufReadPost *.* exec 'botright copen' 
+"autocmd BufReadPost *.* call tagbar#autoopen()
 exec 'colorscheme molokai'
 
 "exec 'Tagbar'
