@@ -72,7 +72,7 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " >>
 " 工程文件浏览
 Plugin 'winmanager'
-"Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 "" 工程文件浏览
 "" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 "nmap wm :NERDTreeToggle<CR>
@@ -357,11 +357,11 @@ filetype indent on
 " 将制表符扩展为空格
 set expandtab
 " 设置编辑时制表符占用空格数
-set tabstop=4
+"set tabstop=4
 " 设置格式化时制表符占用空格数
 set shiftwidth=4
 " 让 vim 把连续数量的空格视为一个制表符
-set softtabstop=4
+"set softtabstop=4
 
 
 " Add maktaba and codefmt to the runtimepath.

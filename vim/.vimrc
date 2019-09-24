@@ -44,6 +44,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'ap/vim-css-color'
+Plugin '907th/vim-auto-save'
+let g:auto_save = 1  " enable AutoSave on Vim startup
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
@@ -72,7 +75,7 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " >>
 " 工程文件浏览
 Plugin 'winmanager'
-"Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 "" 工程文件浏览
 "" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 "nmap wm :NERDTreeToggle<CR>
@@ -96,46 +99,62 @@ map <C-Tab> :MBEbn<cr>
 map <C-S-Tab> :MBEbp<cr>
 
 Plugin 'Lokaltog/vim-powerline'
+
+"airline------
+"Plugin 'vim-airline/vim-airline'
+"Plugin 'vim-airline/vim-airline-themes'
+"airline------
+
 Plugin 'vim-scripts/a.vim'
 "Tagbar........................................................................................
 Plugin 'Tagbar'
 let g:TagbarToggle = 'tb'
 nmap <F9> :TagbarToggle<CR>
+
+"jsctags
+Plugin 'ternjs/tern_for_vim'
+Plugin 'ramitos/jsctags'
+let g:tagbar_type_javascript = {
+      \ 'ctagsbin' : 'jsctags'
+      \ }
+"jsctags
 ""Tagbar........................................................................................
 
-Plugin 'gtags.vim'
-Plugin 'ludovicchabant/vim-gutentags'
-" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+"gtags-------------------------
+"Plugin 'gtags.vim'
+"Plugin 'ludovicchabant/vim-gutentags'
+"" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
+"let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
-" 所生成的数据文件的名称
-let g:gutentags_ctags_tagfile = '.tags'
+"" 所生成的数据文件的名称
+"let g:gutentags_ctags_tagfile = '.tags'
 
-" 同时开启 ctags 和 gtags 支持：
-let g:gutentags_modules = []
-if executable('ctags')
-	let g:gutentags_modules += ['ctags']
-endif
-if executable('gtags-cscope') && executable('gtags')
-	let g:gutentags_modules += ['gtags_cscope']
-endif
+"" 同时开启 ctags 和 gtags 支持：
+"let g:gutentags_modules = []
+""if executable('ctags')
+	""let g:gutentags_modules += ['ctags']
+""endif
+"if executable('gtags-cscope') && executable('gtags')
+	"let g:gutentags_modules += ['gtags_cscope']
+"endif
 
-" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-let g:gutentags_cache_dir = expand('~/.cache/tags')
+"" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+"let g:gutentags_cache_dir = expand('~/.cache/tags')
 
-" 配置 ctags 的参数
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+"" 配置 ctags 的参数
+"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
-" 如果使用 universal ctags 需要增加下面一行
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+"" 如果使用 universal ctags 需要增加下面一行
+"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
-" 禁用 gutentags 自动加载 gtags 数据库的行为
-let g:gutentags_auto_add_gtags_cscope = 0
-Plugin 'skywind3000/gutentags_plus'
-" change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
+"" 禁用 gutentags 自动加载 gtags 数据库的行为
+"let g:gutentags_auto_add_gtags_cscope = 0
+"Plugin 'skywind3000/gutentags_plus'
+"" change focus to quickfix window after search (optional).
+"let g:gutentags_plus_switch = 1
+"gtags-------------------------
 
 "coc_nvim
 "" if hidden is not set, TextEdit might fail.
@@ -239,6 +258,8 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " use `:OR` for organize import of current buffer
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
+nmap <leader>l :call     CocAction('runCommand', 'eslint.executeAutofix')
+xmap <leader>l :call     CocAction('runCommand', 'eslint.executeAutofix')
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
@@ -260,6 +281,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "coc_nvim
+nnoremap <silent> <space> <C-d>
 
 " grep word under cursor
 "nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
@@ -282,6 +304,7 @@ Plugin 'AutoComplPop'
 "Plugin 'autoload_cscope.vim'
 "set cscopequickfix=s-,c-,d-,i-,t-,e-  
 "set cscopeprg=gtags-cscope
+"
 nmap <C-_>s :GscopeFind s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>g :GscopeFind g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>c :GscopeFind c <C-R>=expand("<cword>")<CR><CR>
@@ -291,10 +314,11 @@ nmap <C-_>f :GscopeFind f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-_>i :GscopeFind i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-_>d :GscopeFind d <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
+nmap <silent>gc :GtagsCursor -r<C-R>=expand("<cword>")<CR><CR>
 nmap <F4> :cn<CR>
 nmap <F3> :cp<CR>
 Plugin 'airblade/vim-gitgutter'
-
+Plugin 'tpope/vim-fugitive'
 "ctrlp...............................................................................................
 Plugin 'ctrlp.vim'
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,*/node_modules/*,        " Linux/MacOSX
@@ -311,7 +335,8 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 noremap <C-W><C-U> :CtrlPMRU<CR>
-noremap <C-W><C-R> :CtrlPBufTag<CR>
+"noremap <C-W><C-R> :CtrlPBufTag<CR>
+noremap <C-W><C-R> :BTags<CR>
 nnoremap <C-W>u :CtrlPMRU<CR>
 
 Plugin 'scrooloose/nerdcommenter'
