@@ -93,7 +93,9 @@ Plugin 'scrooloose/nerdtree'
 " 多文档编辑
 " 显示/隐藏 MiniBufExplorer 窗口
 map <Leader>bl :MBEToggle<cr>
-
+map <Leader>bb :Buffers<cr>
+let g:miniBufExplMaxSize = 5
+let g:miniBufExplCloseOnSelect = 1
 " buffer 切换快捷键
 map <C-Tab> :MBEbn<cr>
 map <C-S-Tab> :MBEbp<cr>
@@ -324,8 +326,9 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "coc_nvim
 nnoremap <silent> <space> <C-d>
 
-" grep word under cursor
-"nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+" grep word under cursors
+"
+map <Leader>ag :Ag  <C-R>=expand("<cword>")<CR><CR>
 nnoremap <silent> <space>w  :CocSearch  <C-R>=expand("<cword>")<CR><CR>
 "coc_nvim
 
@@ -359,7 +362,10 @@ nmap <silent>gc :GtagsCursor -r<C-R>=expand("<cword>")<CR><CR>
 nmap <F4> :cn<CR>
 nmap <F3> :cp<CR>
 Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
+Plugin 'neoclide/vim-easygit'
+let g:easygit_enable_command = 1
+
 "ctrlp...............................................................................................
 Plugin 'ctrlp.vim'
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,*/node_modules/*,        " Linux/MacOSX
@@ -450,7 +456,8 @@ Glaive codefmt plugin[mappings]
 Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 "autocmd BufReadPost *.* exec 'botright copen' 
 "autocmd BufReadPost *.* call tagbar#autoopen()
-exec 'colorscheme molokai'
+"exec 'colorscheme molokai'
+exec 'colorscheme mojave'
 
 "exec 'Tagbar'
 "function! CompileLess()
