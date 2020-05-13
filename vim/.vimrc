@@ -40,21 +40,58 @@ set wildmenu
 
 " vundle 环境设置
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-" vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'ap/vim-css-color'
-Plugin '907th/vim-auto-save'
-let g:auto_save = 1  " enable AutoSave on Vim startup
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
 
-Plugin 'flazz/vim-colorschemes'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+" == VIM PLUG ================================
+call plug#begin('~/.nvim/plugged')
+nmap <Leader>as <Plug>(AerojumpSpace)
+nmap <Leader>ab <Plug>(AerojumpBolt)
+nmap <Leader>aa <Plug>(AerojumpFromCursorBolt)
+nmap <Leader>ad <Plug>(AerojumpDefault) " Boring mode
+
+Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
+
+
+"------------------------ COC ------------------------
+" coc for tslinting, auto complete and prettier
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+" coc extensions
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-prettier']
+"------------------------ VIM TSX ------------------------
+" by default, if you open tsx file, neovim does not show syntax colors
+" vim-tsx will do all the coloring for jsx in the .tsx file
+Plug 'ianks/vim-tsx'
+"------------------------ VIM TSX ------------------------
+" by default, if you open tsx file, neovim does not show syntax colors
+" typescript-vim will do all the coloring for typescript keywords
+Plug 'leafgarland/typescript-vim'
+Plug  'ap/vim-css-color'
+Plug  '907th/vim-auto-save'
+let g:auto_save = 1  " enable AutoSave on Vim startup
+
+"fzf
+Plug  'junegunn/fzf'
+Plug  'junegunn/fzf.vim'
+noremap <C-R> :BTags<CR>
+"noremap <C-P> :Files<CR>
+map <Leader>bb :Buffers<cr>
+let g:fzf_layout = {'left': '30%'}
+"fzf
+
+"Leaderf
+"Plug 'rking/ag.vim'
+"map <Leader>rg <C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+"Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+"noremap <C-R> :LeaderfFunction<CR>
+"noremap <C-P> :LeaderfFile<CR>
+"map <Leader>bb :LeaderfBuffer<cr>
+"LeaderF
+
+Plug  'flazz/vim-colorschemes'
+Plug  'SirVer/ultisnips'
+Plug  'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger="<c-t>"
 
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 
@@ -70,12 +107,11 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
-
 "加上/解开注释, 智能判断
 " >>
 " 工程文件浏览
-Plugin 'winmanager'
-Plugin 'scrooloose/nerdtree'
+Plug  'vim-scripts/winmanager'
+Plug  'scrooloose/nerdtree'
 "" 工程文件浏览
 "" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
 "nmap wm :NERDTreeToggle<CR>
@@ -93,41 +129,68 @@ Plugin 'scrooloose/nerdtree'
 " 多文档编辑
 " 显示/隐藏 MiniBufExplorer 窗口
 map <Leader>bl :MBEToggle<cr>
-
+map <Leader>cl :CocList<cr>
+let g:miniBufExplMaxSize = 5
+"let g:miniBufExplCloseOnSelect = 1
 " buffer 切换快捷键
 map <C-Tab> :MBEbn<cr>
 map <C-S-Tab> :MBEbp<cr>
 
-Plugin 'Lokaltog/vim-powerline'
 
-"airline------
-"Plugin 'vim-airline/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'
-"airline------
-
-Plugin 'vim-scripts/a.vim'
+Plug  'vim-scripts/a.vim'
 "Tagbar........................................................................................
-Plugin 'Tagbar'
-let g:TagbarToggle = 'tb'
-nmap <F9> :TagbarToggle<CR>
+"Plug  'vim-scripts/Tagbar'
+Plug 'majutsushi/tagbar'
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
 
+
+
+"let g:tagbar_type_typescript = { 
+"\ 'ctagstype': 'typescript', 
+    "\ 'kinds': [ 
+            "\ 'c:classes', 
+            ""\ 'n:modules', 
+            "\ 'f:functions', 
+            "\ 'v:variables', 
+            "\ 'v:varlambdas', 
+            "\ 'm:members', 
+            "\ 'i:interfaces', 
+            "\ 'e:enums', 
+            "\ ] 
+"\}
 "jsctags
-Plugin 'ternjs/tern_for_vim'
-Plugin 'ramitos/jsctags'
-let g:tagbar_type_javascript = {
-      \ 'ctagsbin' : 'jsctags'
-      \ }
+"Plug  'ternjs/tern_for_vim'
+"Plug  'ramitos/jsctags'
+"let g:tagbar_type_javascript = {
+      "\ 'ctagsbin' : 'jsctags'
+"      \ }
 "jsctags
+
+"let g:TagbarToggle = 'tb'
+"nmap <F9> :TagbarToggle<CR>
 ""Tagbar........................................................................................
 
+
 "gtags-------------------------
-"Plugin 'gtags.vim'
-"Plugin 'ludovicchabant/vim-gutentags'
+"Plug  'gtags.vim'
+Plug  'ludovicchabant/vim-gutentags'
 "" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-"let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
 "" 所生成的数据文件的名称
-"let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_ctags_tagfile = '.tags'
 
 "" 同时开启 ctags 和 gtags 支持：
 "let g:gutentags_modules = []
@@ -139,19 +202,19 @@ let g:tagbar_type_javascript = {
 "endif
 
 "" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
-"let g:gutentags_cache_dir = expand('~/.cache/tags')
+let g:gutentags_cache_dir = expand('~/.cache/tags')
 
 "" 配置 ctags 的参数
-"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 "" 如果使用 universal ctags 需要增加下面一行
-"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 "" 禁用 gutentags 自动加载 gtags 数据库的行为
 "let g:gutentags_auto_add_gtags_cscope = 0
-"Plugin 'skywind3000/gutentags_plus'
+"Plug  'skywind3000/gutentags_plus'
 "" change focus to quickfix window after search (optional).
 "let g:gutentags_plus_switch = 1
 "gtags-------------------------
@@ -261,7 +324,78 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 nmap <leader>l :call     CocAction('runCommand', 'eslint.executeAutofix')
 xmap <leader>l :call     CocAction('runCommand', 'eslint.executeAutofix')
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+"function! StatusDiagnostic() abort
+  "let info = get(b:, 'coc_diagnostic_info', {})
+  "if empty(info) | return '' | endif
+  "let msgs = []
+  "if get(info, 'error', 0)
+    "call add(msgs, 'E' . info['error'])
+  "endif
+  "if get(info, 'warning', 0)
+    "call add(msgs, 'W' . info['warning'])
+  "endif
+  "return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+  "".' '.get(b:,'coc_current_function','')
+"endfunctio
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}%{StatusDiagnostic()}
+"Plug  'Lokaltog/vim-powerline'
+"set laststatus=2
+"vista
+Plug 'liuchengxu/vista.vim'
+nmap <F9> :Vista!!<CR>
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+Plug 'liuchengxu/eleline.vim'
+set laststatus=2
+
+
+"lightline
+"function! CocCurrentFunction()
+    "return get(b:, 'coc_current_function', '')
+"endfunction
+"Plug  'itchyny/lightline.vim'
+"let g:lightline = {
+      "\ 'colorscheme': 'wombat',
+      "\ 'active': {
+      "\   'left': [ [ 'mode', 'paste' ],
+      "\             [ 'readonly', 'filename', 'modified', 'method' ] ]
+      "\ },
+      "\ 'component_function': {
+      "\   'method': 'NearestMethodOrFunction'
+      "\ },
+"      \ }
+"Plug  'itchyny/lightline.vim'
+"let g:lightline = {
+      "\ 'active': {
+      "\   'left': [ [ 'mode', 'paste' ],
+      "\             [ 'gitbranch', 'cocstatus', 'currentfunction', 'method','readonly', 'filename', 'modified' ] ]
+      "\ },
+      "\ 'component_function': {
+      "\   'gitbranch': 'fugitive#head',
+      "\   'cocstatus': 'coc#status',
+      "\   'currentfunction': 'NearestMethodOrFunction'
+      "\ },
+      "\ }
+
+""lightline
+
+"airline------
+"Plug  'vim-airline/vim-airline'
+"Plug  'vim-airline/vim-airline-themes'
+"let g:airline#extensions#coc#enabled = 1
+"let airline#extensions#coc#error_symbol = 'e:'
+"let airline#extensions#coc#warning_symbol = 'w:'
+"let airline#extensions#coc#stl_format_err = '%e{[%e(#%fe)]}'
+"let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+"let g:airline#extensions#tagbar#enabled = 1
+"airline------
+
+
 
 " Using CocList
 " Show all diagnostics
@@ -281,27 +415,31 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "coc_nvim
-nnoremap <silent> <space> <C-d>
+"nnoremap <silent> <space> <C-d>
 
-" grep word under cursor
-"nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
-nnoremap <silent> <space>w  :Ag  <C-R>=expand("<cword>")<CR><CR>
+" grep word under cursors
+"
+Plug 'jremmen/vim-ripgrep'
+map <Leader>ag :Ag  <C-R>=expand("<cword>")<CR><CR>
+map <Leader>rg :Rg  <C-R>=expand("<cword>")<CR><CR>
+
+nnoremap <silent> <space>w  :CocSearch  <C-R>=expand("<cword>")<CR><CR>
 "coc_nvim
 
 
 autocmd BufRead,BufNewFile *.mm :set ft=cpp
 
-Plugin 'terryma/vim-multiple-cursors'
+Plug  'terryma/vim-multiple-cursors'
 
 
 au CursorHold * checktime
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'AutoComplPop'
-"Plugin 'wellcomez/project.vim'
+Plug  'fholgado/minibufexpl.vim'
+Plug  'vim-scripts/AutoComplPop'
+"Plug  'wellcomez/project.vim'
 "cscope
-"Plugin 'cscope.vim'
-"Plugin 'cscope-menu'
-"Plugin 'autoload_cscope.vim'
+"Plug  'cscope.vim'
+"Plug  'cscope-menu'
+"Plug  'autoload_cscope.vim'
 "set cscopequickfix=s-,c-,d-,i-,t-,e-  
 "set cscopeprg=gtags-cscope
 "
@@ -312,16 +450,20 @@ nmap <C-_>t :GscopeFind t <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>e :GscopeFind e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>f :GscopeFind f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-_>i :GscopeFind i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"autocmd vimenter * ToggleNERDTreeAndTagbar 
 nmap <C-_>d :GscopeFind d <C-R>=expand("<cword>")<CR><CR>
 nmap <C-_>r :Gtags -r<C-R>=expand("<cword>")<CR><CR>
 nmap <silent>gc :GtagsCursor -r<C-R>=expand("<cword>")<CR><CR>
 nmap <F4> :cn<CR>
 nmap <F3> :cp<CR>
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
+Plug  'airblade/vim-gitgutter'
+Plug  'tpope/vim-fugitive'
+Plug  'neoclide/vim-easygit'
+let g:easygit_enable_command = 1
+
 "ctrlp...............................................................................................
-Plugin 'ctrlp.vim'
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,*/node_modules/*,        " Linux/MacOSX
+Plug  'vim-scripts/ctrlp.vim'
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/gradle/*,*/node_modules/*,*/venv/*,*/build/*        " Linux/MacOSX
 let g:ctrlp_max_height = 100
 let g:ctrlp_max_files =0 
 let g:ctrlp_by_filename = 0
@@ -334,12 +476,11 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
-noremap <C-W><C-U> :CtrlPMRU<CR>
-"noremap <C-W><C-R> :CtrlPBufTag<CR>
-noremap <C-W><C-R> :BTags<CR>
-nnoremap <C-W>u :CtrlPMRU<CR>
+"noremap <C-W><C-U> :CtrlPMRU<CR>
+""noremap <C-W><C-R> :CtrlPBufTag<CR>
+"nnoremap <C-W>u :CtrlPMRU<CR>
 
-Plugin 'scrooloose/nerdcommenter'
+Plug  'scrooloose/nerdcommenter'
 
 " 插件列表结束
 filetype plugin indent on
@@ -389,28 +530,14 @@ set shiftwidth=4
 set softtabstop=4
 
 
-" Add maktaba and codefmt to the runtimepath.
-" (The latter must be installed before it can be used.)
-Plugin 'google/vim-maktaba'
-Plugin 'google/vim-codefmt'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
-Plugin 'google/vim-glaive'
 
 
-"Plugin 'pseewald/nerdtree-tagbar-combined'
-"autocmd vimenter * ToggleNERDTreeAndTagbar 
-call vundle#end()
-
-
-call glaive#Install()
-" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-Glaive codefmt plugin[mappings]
-Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
-"autocmd BufReadPost *.* exec 'botright copen' 
-"autocmd BufReadPost *.* call tagbar#autoopen()
-exec 'colorscheme molokai'
-
-"exec 'Tagbar'
-"function! CompileLess()
-
+call plug#end()
+" == VIMPLUG END ================================
+" == AUTOCMD ================================ 
+" by default .ts file are not identified as typescript and .tsx files are not
+" identified as typescript react file, so add following
+au BufNewFile,BufRead *.ts setlocal filetype=typescript
+au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+" == AUTOCMD END ================================
+colorscheme molokai
