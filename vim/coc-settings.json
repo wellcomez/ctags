@@ -1,41 +1,37 @@
 {
-    "suggest.minTriggerInputLength": 3,
-    "snippets.extends": {
-        "cpp": ["c"],
-        "javascriptreact": ["javascript"],
-        "typescript": ["javascript"]
-    },
     "languageserver": {
-        "ccls": {
-            "command": "ccls",
-            "filetypes": [
-                "c",
-                "cpp",
-                "objc",
-                "objcpp"
-            ],
-            "rootPatterns": [
-                ".ccls",
-                "compile_commands.json",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "initializationOptions": {
-                "cache": {
-                  "directory": "/tmp/ccls"
-                },
-                "clang": {
-                  "resourceDir": "/Library/Developer/CommandLineTools/usr/lib/clang/10.0.1",
-                  "extraArgs": [
-                    "-isystem",
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
-                    "-I",
-                    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"        
-                  ]
-                }
-            }
+    "xxxxclangd": {
+      "command": "clangd",
+      "args": ["--background-index"],
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    }
+    },
+ 
+    "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", 
+          "compile_commands.json", 
+          "**/compile_commands.json", 
+          ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
         },
+        "clang": {
+           // make sure you have installed commandLineTools
+          "resourceDir": "/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0",
+          "extraArgs": [
+            "-isystem",
+            "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
+            "-I",
+            "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"        
+          ]
+        }
+      }
+    },
         "python": {
             "command": "python",
             "args": [
