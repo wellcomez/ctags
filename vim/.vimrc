@@ -42,7 +42,7 @@ set wildmenu
 filetype off
 
 " == VIM PLUG ================================
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.vim/plugged')
 nmap <Leader>as <Plug>(AerojumpSpace)
 nmap <Leader>ab <Plug>(AerojumpBolt)
 nmap <Leader>aa <Plug>(AerojumpFromCursorBolt)
@@ -55,7 +55,7 @@ Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 " coc for tslinting, auto complete and prettier
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 " coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-prettier']
+let g:coc_global_extensions = ['coc-eslint','coc-tslint-plugin', 'coc-tsserver', 'coc-prettier','coc-json','coc-marketplace','coc-ccls','coc-python','coc-tabnine','coc-git','coc-ultisnips']
 "------------------------ VIM TSX ------------------------
 " by default, if you open tsx file, neovim does not show syntax colors
 " vim-tsx will do all the coloring for jsx in the .tsx file
@@ -422,6 +422,7 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 Plug 'jremmen/vim-ripgrep'
 map <Leader>ag :Ag  <C-R>=expand("<cword>")<CR><CR>
 map <Leader>rg :Rg  <C-R>=expand("<cword>")<CR><CR>
+"let g:rg_window_location = 'bot'
 
 nnoremap <silent> <space>w  :CocSearch  <C-R>=expand("<cword>")<CR><CR>
 "coc_nvim
