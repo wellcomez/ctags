@@ -10,6 +10,7 @@ filetype on
 " 根据侦测到的不同类型加载对应的插件
 filetype plugin on
 set mouse=a
+set hlsearch
 " <<
 
 " >>
@@ -53,7 +54,7 @@ Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "------------------------ COC ------------------------
 " coc for tslinting, auto complete and prettier
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 " coc extensions
 let g:coc_global_extensions = ['coc-eslint','coc-tslint-plugin', 'coc-tsserver', 'coc-prettier','coc-json','coc-marketplace','coc-ccls','coc-python','coc-tabnine','coc-git','coc-ultisnips']
 "------------------------ VIM TSX ------------------------
@@ -67,6 +68,10 @@ Plug 'leafgarland/typescript-vim'
 Plug  'ap/vim-css-color'
 Plug  '907th/vim-auto-save'
 let g:auto_save = 1  " enable AutoSave on Vim startup
+"objective-c
+Plug 'Raimondi/delimitMate'
+Plug 'eraserhd/vim-ios'
+Plug 'jgoulah/cocoa.vim'           " method list, documentation
 
 "fzf
 Plug  'junegunn/fzf'
@@ -84,7 +89,7 @@ let g:fzf_layout = {'left': '30%'}
 "noremap <C-R> :LeaderfFunction<CR>
 "noremap <C-P> :LeaderfFile<CR>
 "map <Leader>bb :LeaderfBuffer<cr>
-"LeaderF
+"Leaderf
 
 Plug  'flazz/vim-colorschemes'
 Plug  'SirVer/ultisnips'
@@ -128,14 +133,7 @@ Plug  'scrooloose/nerdtree'
 "" >>
 " 多文档编辑
 " 显示/隐藏 MiniBufExplorer 窗口
-map <Leader>bl :MBEToggle<cr>
 map <Leader>cl :CocList<cr>
-let g:miniBufExplMaxSize = 5
-"let g:miniBufExplCloseOnSelect = 1
-" buffer 切换快捷键
-map <C-Tab> :MBEbn<cr>
-map <C-S-Tab> :MBEbp<cr>
-
 
 Plug  'vim-scripts/a.vim'
 "Tagbar........................................................................................
@@ -185,6 +183,7 @@ let g:tagbar_type_typescript = {
 
 "gtags-------------------------
 "Plug  'gtags.vim'
+Plug 'vim-scripts/gtags.vim'
 Plug  'ludovicchabant/vim-gutentags'
 "" gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
@@ -195,10 +194,10 @@ let g:gutentags_ctags_tagfile = '.tags'
 "" 同时开启 ctags 和 gtags 支持：
 "let g:gutentags_modules = []
 ""if executable('ctags')
-	""let g:gutentags_modules += ['ctags']
+    "let g:gutentags_modules += ['ctags']
 ""endif
 "if executable('gtags-cscope') && executable('gtags')
-	"let g:gutentags_modules += ['gtags_cscope']
+    ""let g:gutentags_modules += ['gtags_cscope']
 "endif
 
 "" 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
@@ -422,7 +421,7 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 Plug 'jremmen/vim-ripgrep'
 map <Leader>ag :Ag  <C-R>=expand("<cword>")<CR><CR>
 map <Leader>rg :Rg  <C-R>=expand("<cword>")<CR><CR>
-"let g:rg_window_location = 'bot'
+let g:rg_window_location = 'bot'
 
 nnoremap <silent> <space>w  :CocSearch  <C-R>=expand("<cword>")<CR><CR>
 "coc_nvim
@@ -434,7 +433,51 @@ Plug  'terryma/vim-multiple-cursors'
 
 
 au CursorHold * checktime
-Plug  'fholgado/minibufexpl.vim'
+"tab Manage
+"------Plug 'ap/vim-buftabline'-------
+"Plug 'ap/vim-buftabline'
+"let g:buftabline_numbers=2
+"let g:buftabline_separators = true 
+"nmap <leader>1 <Plug>BufTabLine.Go(1)
+"nmap <leader>2 <Plug>BufTabLine.Go(2)
+"nmap <leader>3 <Plug>BufTabLine.Go(3)
+"nmap <leader>4 <Plug>BufTabLine.Go(4)
+"nmap <leader>5 <Plug>BufTabLine.Go(5)
+"nmap <leader>6 <Plug>BufTabLine.Go(6)
+"nmap <leader>7 <Plug>BufTabLine.Go(7)
+"nmap <leader>8 <Plug>BufTabLine.Go(8)
+"nmap <leader>9 <Plug>BufTabLine.Go(9)
+"nmap <leader>0 <Plug>BufTabLine.Go(10)
+"------Plug 'ap/vim-buftabline'-------
+
+"------------------Plug 'pacha/vem-tabline'----
+Plug 'pacha/vem-tabline'
+let g:vem_tabline_show_number = "index"
+nmap <leader>1 :VemTablineGo 1<CR>
+nmap <leader>2 :VemTablineGo 2<CR>
+nmap <leader>3 :VemTablineGo 3<CR>
+nmap <leader>4 :VemTablineGo 4<CR>
+nmap <leader>5 :VemTablineGo 5<CR>
+nmap <leader>6 :VemTablineGo 6<CR>
+nmap <leader>7 :VemTablineGo 7<CR>
+nmap <leader>8 :VemTablineGo 8<CR>
+nmap <leader>9 :VemTablineGo 9<CR>
+"------------------Plug 'pacha/vem-tabline'----
+
+"-----Plug  'fholgado/minibufexpl.vim'---------
+"Plug  'fholgado/minibufexpl.vim'
+"map <Leader>bl :MBEToggle<cr>
+"let g:miniBufExplMaxSize = 5
+"let g:miniBufExplCloseOnSelect = 1
+" buffer 切换快捷键
+"map <C-Tab> :MBEbn<cr>
+"map <C-S-Tab> :MBEbp<cr>
+"-----Plug  'fholgado/minibufexpl.vim'---------
+
+
+"tab Manage
+
+
 Plug  'vim-scripts/AutoComplPop'
 "Plug  'wellcomez/project.vim'
 "cscope
