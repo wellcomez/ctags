@@ -51,12 +51,13 @@ nmap <Leader>ad <Plug>(AerojumpDefault) " Boring mode
 
 Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 
-
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
 "------------------------ COC ------------------------
 " coc for tslinting, auto complete and prettier
 Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 " coc extensions
-let g:coc_global_extensions = ['coc-eslint','coc-tslint-plugin', 'coc-tsserver', 'coc-prettier','coc-json','coc-marketplace','coc-ccls','coc-python','coc-tabnine','coc-git','coc-ultisnips']
+let g:coc_global_extensions = ['coc-eslint','coc-tslint-plugin', 'coc-tsserver', 'coc-prettier','coc-json','coc-marketplace','coc-python','coc-tabnine','coc-git','coc-ultisnips']
 "------------------------ VIM TSX ------------------------
 " by default, if you open tsx file, neovim does not show syntax colors
 " vim-tsx will do all the coloring for jsx in the .tsx file
@@ -92,6 +93,8 @@ let g:fzf_layout = {'left': '30%'}
 "Leaderf
 
 Plug  'flazz/vim-colorschemes'
+Plug  'morhetz/gruvbox'
+Plug  'kyoz/purify', { 'rtp': 'vim' }
 Plug  'SirVer/ultisnips'
 Plug  'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger="<c-t>"
@@ -451,27 +454,27 @@ au CursorHold * checktime
 "------Plug 'ap/vim-buftabline'-------
 
 "------------------Plug 'pacha/vem-tabline'----
-Plug 'pacha/vem-tabline'
-let g:vem_tabline_show_number = "index"
-nmap <leader>1 :VemTablineGo 1<CR>
-nmap <leader>2 :VemTablineGo 2<CR>
-nmap <leader>3 :VemTablineGo 3<CR>
-nmap <leader>4 :VemTablineGo 4<CR>
-nmap <leader>5 :VemTablineGo 5<CR>
-nmap <leader>6 :VemTablineGo 6<CR>
-nmap <leader>7 :VemTablineGo 7<CR>
-nmap <leader>8 :VemTablineGo 8<CR>
-nmap <leader>9 :VemTablineGo 9<CR>
+"Plug 'pacha/vem-tabline'
+"let g:vem_tabline_show_number = "index"
+"nmap <leader>1 :VemTablineGo 1<CR>
+"nmap <leader>2 :VemTablineGo 2<CR>
+"nmap <leader>3 :VemTablineGo 3<CR>
+"nmap <leader>4 :VemTablineGo 4<CR>
+"nmap <leader>5 :VemTablineGo 5<CR>
+"nmap <leader>6 :VemTablineGo 6<CR>
+"nmap <leader>7 :VemTablineGo 7<CR>
+"nmap <leader>8 :VemTablineGo 8<CR>
+"nmap <leader>9 :VemTablineGo 9<CR>
 "------------------Plug 'pacha/vem-tabline'----
 
 "-----Plug  'fholgado/minibufexpl.vim'---------
-"Plug  'fholgado/minibufexpl.vim'
-"map <Leader>bl :MBEToggle<cr>
-"let g:miniBufExplMaxSize = 5
-"let g:miniBufExplCloseOnSelect = 1
+Plug  'fholgado/minibufexpl.vim'
+map <Leader>bl :MBEToggle<cr>
+let g:miniBufExplMaxSize = 5
+let g:miniBufExplCloseOnSelect = 0
 " buffer 切换快捷键
-"map <C-Tab> :MBEbn<cr>
-"map <C-S-Tab> :MBEbp<cr>
+map <C-Tab> :MBEbn<cr>
+map <C-S-Tab> :MBEbp<cr>
 "-----Plug  'fholgado/minibufexpl.vim'---------
 
 
@@ -575,7 +578,6 @@ set softtabstop=4
 
 
 
-
 call plug#end()
 " == VIMPLUG END ================================
 " == AUTOCMD ================================ 
@@ -584,4 +586,8 @@ call plug#end()
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 " == AUTOCMD END ================================
-colorscheme molokai
+"colorscheme 1989 
+set background=dark    " Setting dark mode
+"colorscheme purify
+"autocmd vimenter * ++nested colorscheme gruvbox
+colorscheme Monokai
